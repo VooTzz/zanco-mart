@@ -7,18 +7,39 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h2>Selamat Datang, <span id="username"></span>!</h2>
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar hidden">
+    <ul>
+      <li><a href="#">Profil</a></li>
+      <li><a href="#">Product</a></li>
+      <li><a href="#">Pasar</a></li>
+      <li><a href="#">Pembayaran</a></li>
+      <li><button onclick="logout()">Logout</button></li>
+    </ul>
+  </div>
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <span class="menu-btn" onclick="toggleSidebar()">☰</span>
+    <h2>Dashboard</h2>
+  </div>
+
+  <!-- Konten Utama -->
+  <div class="main-content">
+    <h3>Selamat datang, <span id="username"></span>!</h3>
     <p>Ini adalah halaman utama setelah login berhasil.</p>
-    
-    <button onclick="logout()">Logout</button>
   </div>
 
   <script src="script.js"></script>
   <script>
-    // Tampilkan username dari localStorage
+    // Tampilkan username
     const username = localStorage.getItem("loggedInUser");
     document.getElementById("username").innerText = username || "User";
+
+    // Toggle sidebar
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("hidden");
+    }
   </script>
 </body>
 </html>

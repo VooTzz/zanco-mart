@@ -1,45 +1,153 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <!-- Sidebar -->
-  <div id="sidebar" class="sidebar hidden">
-    <ul>
-      <li><a href="#">Profil</a></li>
-      <li><a href="#">Product</a></li>
-      <li><a href="#">Pasar</a></li>
-      <li><a href="#">Pembayaran</a></li>
-      <li><button onclick="logout()">Logout</button></li>
-    </ul>
-  </div>
+/* Reset */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
+}
 
-  <!-- Top Bar -->
-  <div class="topbar">
-    <span class="menu-btn" onclick="toggleSidebar()">☰</span>
-    <h2>Dashboard</h2>
-  </div>
+/* Container Umum */
+.container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  text-align: center;
+}
 
-  <!-- Konten Utama -->
-  <div class="main-content">
-    <h3>Selamat datang, <span id="username"></span>!</h3>
-    <p>Ini adalah halaman utama setelah login berhasil.</p>
-  </div>
+/* Form */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
 
-  <script src="script.js"></script>
-  <script>
-    // Tampilkan username
-    const username = localStorage.getItem("loggedInUser");
-    document.getElementById("username").innerText = username || "User";
+/* Tombol */
+button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
 
-    // Toggle sidebar
-    function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("hidden");
-    }
-  </script>
-</body>
-</html>
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Link */
+a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Dashboard Styles */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Topbar */
+.topbar {
+  background-color: #2c3e50;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar h2 {
+  margin: 0;
+}
+
+.menu-toggle {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Sidebar (Initially Hidden) */
+.sidebar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100%;
+  background-color: #2c3e50;
+  padding-top: 60px;
+  z-index: 1000;
+}
+
+.sidebar.show {
+  display: block;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+  text-align: center;
+}
+
+.sidebar ul li a,
+.sidebar ul li button {
+  color: white;
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Overlay */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  z-index: 900;
+}
+
+.overlay.show {
+  display: block;
+}
+
+/* Konten Utama */
+.main-content {
+  padding: 20px;
+  margin-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .container {
+    margin: 40px 20px;
+  }
+
+  .main-content {
+    padding: 15px;
+  }
+}

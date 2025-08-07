@@ -1,4 +1,4 @@
-// Simpan dan ambil data user dari localStorage
+// ========== Simpan dan Ambil Data User ==========
 function saveUser(username, password) {
   const users = JSON.parse(localStorage.getItem("users")) || {};
   if (users[username]) return false; // Username sudah terdaftar
@@ -12,7 +12,7 @@ function checkLogin(username, password) {
   return users[username] === password;
 }
 
-// Handle Register (di register.html)
+// ========== Handle Register ==========
 const registerForm = document.getElementById("register-form");
 if (registerForm) {
   registerForm.addEventListener("submit", function (e) {
@@ -31,7 +31,7 @@ if (registerForm) {
   });
 }
 
-// Handle Login (di index.html)
+// ========== Handle Login ==========
 const loginForm = document.getElementById("login-form");
 if (loginForm) {
   loginForm.addEventListener("submit", function (e) {
@@ -43,11 +43,7 @@ if (loginForm) {
     if (checkLogin(username, password)) {
       message.style.color = "green";
       message.innerText = "Login berhasil!";
-
-      // Simpan status login
       localStorage.setItem("loggedInUser", username);
-
-      // Redirect ke dashboard
       setTimeout(() => {
         window.location.href = "dashboard.html";
       }, 1000);
@@ -58,20 +54,72 @@ if (loginForm) {
   });
 }
 
-// Proteksi halaman dashboard (di dashboard.html)
+// ========== Proteksi Halaman ==========
 const currentPage = window.location.pathname;
 
 if (currentPage.includes("dashboard.html")) {
   const user = localStorage.getItem("loggedInUser");
-
-  if (!user) {
-    // Jika belum login, kembalikan ke halaman login
-    window.location.href = "index.html";
-  }
-
-  // Logout function
+  if (!user) window.location.href = "index.html";
   window.logout = function () {
     localStorage.removeItem("loggedInUser");
     window.location.href = "index.html";
   };
+}
+
+// ========== Handle Isi Saldo ==========
+const isiForm = document.getElementById("isi-form");
+if (isiForm) {
+  isiForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const jumlah = document.getElementById("jumlah-isi").value;
+    const metode = document.getElementById("metode-isi").value;
+    const nomor = document.getElementById("nomor-isi").value;
+    const notif = document.getElementById("isi-message");
+
+    const data = { jumlah, metode, nomor };
+
+    fetch("https://api-kamu.com/isi", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(res => {
+        notif.style.color = "green";
+        notif.innerText = "Berhasil isi saldo: " + res.message;
+      })
+      .catch(err => {
+        notif.style.color = "red";
+        notif.innerText = "Gagal isi saldo: " + err.message;
+      });
+  });
+}
+
+// ========== Handle Tarik Saldo ==========
+const tarikForm = document.getElementById("tarik-form");
+if (tarikForm) {
+  tarikForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const jumlah = document.getElementById("jumlah-tarik").value;
+    const metode = document.getElementById("metode-tarik").value;
+    const nomor = document.getElementById("nomor-tarik").value;
+    const notif = document.getElementById("tarik-message");
+
+    const data = { jumlah, metode, nomor };
+
+    fetch("https://api-kamu.com/tarik", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(res => {
+        notif.style.color = "green";
+        notif.innerText = "Berhasil tarik: " + res.message;
+      })
+      .catch(err => {
+        notif.style.color = "red";
+        notif.innerText = "Gagal tarik: " + err.message;
+      });
+  });
 }

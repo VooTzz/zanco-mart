@@ -3,17 +3,17 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #f9f9f9;
 }
 
 /* Container Umum */
 .container {
-  max-width: 400px;
+  max-width: 420px;
   margin: 80px auto;
   padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
   text-align: center;
 }
 
@@ -21,30 +21,39 @@ body, html {
 input[type="text"],
 input[type="password"] {
   width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 14px;
+  margin: 12px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background-color: #fdfdfd;
+}
+
+input:focus {
+  border-color: #3498db;
+  outline: none;
 }
 
 /* Tombol */
 button {
-  padding: 10px 20px;
-  background-color: #3498db;
+  padding: 12px 20px;
+  background-color: #6c5ce7;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  margin-top: 10px;
+  font-weight: bold;
+  width: 100%;
+  transition: 0.3s ease;
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-color: #5a4bd4;
 }
 
 /* Link */
 a {
-  color: #3498db;
+  color: #6c5ce7;
   text-decoration: none;
 }
 
@@ -57,41 +66,45 @@ a:hover {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: #f4f4f4;
 }
 
 /* Topbar */
 .topbar {
-  background-color: #2c3e50;
+  background-color: #6c5ce7;
   color: white;
-  padding: 15px 20px;
+  padding: 18px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 3px solid #a29bfe;
 }
 
 .topbar h2 {
   margin: 0;
+  font-size: 20px;
 }
 
 .menu-toggle {
-  font-size: 24px;
+  font-size: 26px;
   background: none;
   border: none;
   color: white;
   cursor: pointer;
 }
 
-/* Sidebar (Initially Hidden) */
+/* Sidebar */
 .sidebar {
   display: none;
   position: fixed;
   top: 0;
   left: 0;
-  width: 220px;
+  width: 240px;
   height: 100%;
-  background-color: #2c3e50;
-  padding-top: 60px;
+  background-color: #6c5ce7;
+  padding-top: 70px;
   z-index: 1000;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
 }
 
 .sidebar.show {
@@ -105,7 +118,7 @@ a:hover {
 }
 
 .sidebar ul li {
-  margin: 15px 0;
+  margin: 18px 0;
   text-align: center;
 }
 
@@ -115,7 +128,7 @@ a:hover {
   text-decoration: none;
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 17px;
   cursor: pointer;
 }
 
@@ -127,7 +140,7 @@ a:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.4);
   z-index: 900;
 }
 
@@ -137,17 +150,70 @@ a:hover {
 
 /* Konten Utama */
 .main-content {
+  padding: 24px;
+  margin-bottom: 80px; /* for bottom nav */
+}
+
+/* Profil Kartu */
+.profile-card {
+  background-color: #ffffff;
   padding: 20px;
-  margin-top: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+}
+
+.profile-card h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.profile-info {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #666;
+}
+
+.profile-balance {
+  font-size: 20px;
+  font-weight: bold;
+  color: #27ae60;
+  margin-top: 10px;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0;
+  z-index: 999;
+}
+
+.bottom-nav a {
+  text-align: center;
+  font-size: 13px;
+  color: #6c5ce7;
+  text-decoration: none;
+}
+
+.bottom-nav a:hover {
+  color: #5a4bd4;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
   .container {
-    margin: 40px 20px;
+    margin: 40px 16px;
   }
 
   .main-content {
-    padding: 15px;
+    padding: 18px;
   }
-}
+  }

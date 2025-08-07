@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Berita</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .berita-item {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .berita-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .berita-content {
+      flex: 1;
+    }
+
+    .berita-content h4 {
+      margin: 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .berita-content p {
+      font-size: 13px;
+      color: #666;
+      margin: 5px 0;
+    }
+
+    .berita-content .tanggal {
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    .berita-content a {
+      display: inline-block;
+      margin-top: 5px;
+      font-size: 13px;
+      color: #6c5ce7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <h2>Berita</h2>
+  </div>
+
+  <!-- Overlay dan Sidebar -->
+  <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
+  <div id="sidebar" class="sidebar">
+    <ul>
+      <li><a href="profil.html">Profil</a></li>
+      <li><a href="product.html">Product</a></li>
+      <li><a href="pasar.html">Pasar</a></li>
+      <li><a href="pembayaran.html">Pembayaran</a></li>
+      <li><button onclick="logout()">Logout</button></li>
+    </ul>
+  </div>
+
+  <!-- Konten Berita -->
+  <div class="dashboard-container">
+    <div class="main-content">
+      
+      <div class="berita-item">
+        <img src="https://source.unsplash.com/100x100/?news" alt="Berita 1">
+        <div class="berita-content">
+          <h4>Update Pasar Hari Ini</h4>
+          <p>Harga komoditas meningkat tajam dalam seminggu terakhir.</p>
+          <div class="tanggal">7 Agustus 2025</div>
+          <a href="#">Lihat Detail</a>
+        </div>
+      </div>
+
+      <div class="berita-item">
+        <img src="https://source.unsplash.com/100x100/?finance" alt="Berita 2">
+        <div class="berita-content">
+          <h4>Tips Keuangan Anak Muda</h4>
+          <p>Cara mengatur keuangan di era digital dengan bijak.</p>
+          <div class="tanggal">6 Agustus 2025</div>
+          <a href="#">Lihat Detail</a>
+        </div>
+      </div>
+
+      <div class="berita-item">
+        <img src="https://source.unsplash.com/100x100/?economy" alt="Berita 3">
+        <div class="berita-content">
+          <h4>Ekonomi Global Melambat</h4>
+          <p>Dampaknya terhadap investasi di negara berkembang.</p>
+          <div class="tanggal">5 Agustus 2025</div>
+          <a href="#">Lihat Detail</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="index.html"><div>🏠<br>Rumah</div></a>
+    <a href="aktiva.html"><div>🚗<br>Aktiva</div></a>
+    <a href="berita.html"><div>📰<br>Berita</div></a>
+    <a href="profil.html"><div>👤<br>Saya</div></a>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+      sidebar.classList.toggle("show");
+      overlay.classList.toggle("show");
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

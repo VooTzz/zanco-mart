@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Isi Saldo</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .form-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    select, input[type="number"], input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .submit-btn {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <h2>Isi Saldo</h2>
+  </div>
+
+  <!-- Sidebar -->
+  <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
+  <div id="sidebar" class="sidebar">
+    <ul>
+      <li><a href="profil.html">Profil</a></li>
+      <li><a href="product.html">Product</a></li>
+      <li><a href="pasar.html">Pasar</a></li>
+      <li><a href="pembayaran.html">Pembayaran</a></li>
+      <li><button onclick="logout()">Logout</button></li>
+    </ul>
+  </div>
+
+  <!-- Form Isi Saldo -->
+  <div class="dashboard-container">
+    <div class="main-content">
+      <form id="isiForm">
+        <div class="form-group">
+          <label for="jumlah">Jumlah Isi (Rp)</label>
+          <input type="number" id="jumlah" name="jumlah" placeholder="Contoh: 100000" required>
+        </div>
+
+        <div class="form-group">
+          <label for="metode">Metode Pembayaran</label>
+          <select id="metode" name="metode" required>
+            <option value="">-- Pilih Metode --</option>
+            <option value="DANA">DANA</option>
+            <option value="OVO">OVO</option>
+            <option value="Gopay">Gopay</option>
+            <option value="QRIS">QRIS</option>
+            <option value="Bank">Transfer Bank</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="nomor">Nomor Tujuan Pembayaran</label>
+          <input type="text" id="nomor" name="nomor" placeholder="0812xxxxxxx / Rekening" required>
+        </div>
+
+        <button type="submit" class="submit-btn">Isi Sekarang</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="index.html"><div>🏠<br>Rumah</div></a>
+    <a href="aktiva.html"><div>🚗<br>Aktiva</div></a>
+    <a href="berita.html"><div>📰<br>Berita</div></a>
+    <a href="profil.html"><div>👤<br>Saya</div></a>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("show");
+      document.getElementById("overlay").classList.toggle("show");
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    }
+
+    document.getElementById("isiForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const jumlah = document.getElementById("jumlah").value;
+      const metode = document.getElementById("metode").value;
+      const nomor = document.getElementById("nomor").value;
+
+      const data = {
+        jumlah: parseInt(jumlah),
+        metode: metode,
+        nomor: nomor
+      };
+
+      console.log("Data dikirim ke API:", data);
+
+      // Kirim data ke API kamu di sini
+      // Contoh:
+      // fetch("https://domainmu.com/api/isi", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(data)
+      // })
+      // .then(res => res.json())
+      // .then(res => alert("Berhasil: " + res.message))
+      // .catch(err => alert("Gagal isi: " + err.message));
+
+      alert("Permintaan isi saldo sedang diproses...");
+    });
+  </script>
+</body>
+</html>

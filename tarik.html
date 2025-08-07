@@ -29,6 +29,87 @@
 
     .submit-btn {
       margin-top: 20px;
+      padding: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #45a049;
+    }
+
+    .topbar {
+      background-color: #f0f0f0;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .menu-toggle {
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .sidebar {
+      position: fixed;
+      left: -250px;
+      top: 0;
+      width: 250px;
+      height: 100%;
+      background: #fff;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+      padding: 20px;
+      transition: 0.3s;
+      z-index: 999;
+    }
+
+    .sidebar.show {
+      left: 0;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+      z-index: 998;
+      display: none;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background-color: #f8f8f8;
+      border-top: 1px solid #ddd;
+      padding: 10px 0;
+    }
+
+    .bottom-nav a {
+      text-align: center;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .dashboard-container {
+      padding: 20px;
+      padding-bottom: 80px;
     }
   </style>
 </head>
@@ -74,7 +155,7 @@
 
         <div class="form-group">
           <label for="nomor">Nomor Tujuan / Rekening</label>
-          <input type="text" id="nomor" name="nomor" placeholder="0812xxxxxxxx atau No. Rek" required>
+          <input type="text" id="nomor" name="nomor" placeholder="0812xxxxxxxx atau No. Rekening" required>
         </div>
 
         <button type="submit" class="submit-btn">Tarik Sekarang</button>
@@ -104,21 +185,35 @@
     document.getElementById("tarikForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      const jumlah = document.getElementById("jumlah").value;
+      const jumlah = parseInt(document.getElementById("jumlah").value);
       const metode = document.getElementById("metode").value;
       const nomor = document.getElementById("nomor").value;
+      const user = localStorage.getItem("loggedInUser");
 
-      // Data siap dikirim ke API
-      const data = {
-        jumlah: parseInt(jumlah),
-        metode: metode,
-        nomor: nomor
-      };
+      if (!user) {
+        alert("Silakan login terlebih dahulu.");
+        return;
+      }
 
+      // Ambil saldo dari localStorage
+      const saldo = JSON.parse(localStorage.getItem("saldo") || "{}");
+      const saldoUser = saldo[user] || 0;
+
+      if (jumlah > saldoUser) {
+        alert("Saldo tidak cukup untuk penarikan.");
+        return;
+      }
+
+      // Kurangi saldo
+      saldo[user] = saldoUser - jumlah;
+      localStorage.setItem("saldo", JSON.stringify(saldo));
+
+      // Simulasi pengiriman ke API
+      const data = { user, jumlah, metode, nomor };
       console.log("Data dikirim ke API:", data);
 
-      // TODO: Kirim data ke API kamu pakai fetch/axios nanti
-      alert("Permintaan penarikan sedang diproses...");
+      alert("Penarikan berhasil! Saldo Anda telah diperbarui.");
+      document.getElementById("tarikForm").reset();
     });
   </script>
 </body>

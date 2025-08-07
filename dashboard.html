@@ -7,38 +7,70 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Overlay untuk sidebar -->
+  <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
+
   <!-- Sidebar -->
-  <div id="sidebar" class="sidebar hidden">
+  <div id="sidebar" class="sidebar">
     <ul>
-      <li><a href="#">Profil</a></li>
-      <li><a href="#">Product</a></li>
-      <li><a href="#">Pasar</a></li>
-      <li><a href="#">Pembayaran</a></li>
+      <li><a href="profil.html">Profil</a></li>
+      <li><a href="product.html">Product</a></li>
+      <li><a href="pasar.html">Pasar</a></li>
+      <li><a href="pembayaran.html">Pembayaran</a></li>
       <li><button onclick="logout()">Logout</button></li>
     </ul>
   </div>
 
   <!-- Top Bar -->
   <div class="topbar">
-    <span class="menu-btn" onclick="toggleSidebar()">☰</span>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
     <h2>Dashboard</h2>
   </div>
 
   <!-- Konten Utama -->
-  <div class="main-content">
-    <h3>Selamat datang, <span id="username"></span>!</h3>
-    <p>Ini adalah halaman utama setelah login berhasil.</p>
+  <div class="dashboard-container">
+    <div class="main-content">
+      <!-- Kartu Profil -->
+      <div class="profile-card">
+        <h3 id="username">User</h3>
+        <div class="profile-info">
+          Level: <strong>LV1</strong> &nbsp;|&nbsp; Kode: <strong>HGQF6B</strong>
+        </div>
+        <div class="profile-balance">Saldo: Rp <span id="balance">0</span></div>
+      </div>
+
+      <p>Selamat datang di dashboard. Silakan pilih menu di bawah atau dari sidebar.</p>
+    </div>
   </div>
 
-  <script src="script.js"></script>
-  <script>
-    // Tampilkan username
-    const username = localStorage.getItem("loggedInUser");
-    document.getElementById("username").innerText = username || "User";
+  <!-- Navigasi Bawah -->
+  <div class="bottom-nav">
+    <a href="index.html"><div>🏠<br>Rumah</div></a>
+    <a href="aktiva.html"><div>🚗<br>Aktiva</div></a>
+    <a href="berita.html"><div>📰<br>Berita</div></a>
+    <a href="profil.html"><div>👤<br>Saya</div></a>
+  </div>
 
-    // Toggle sidebar
+  <script>
+    // Ambil nama pengguna dari localStorage
+    const username = localStorage.getItem("loggedInUser") || "User";
+    document.getElementById("username").innerText = username;
+
+    // Simulasi saldo
+    const saldoSimulasi = 341667;
+    document.getElementById("balance").innerText = saldoSimulasi.toLocaleString("id-ID");
+
     function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("hidden");
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+      sidebar.classList.toggle("show");
+      overlay.classList.toggle("show");
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
     }
   </script>
 </body>

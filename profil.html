@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profil Saya</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Overlay -->
+  <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">
+    <ul>
+      <li><a href="profil.html">Profil</a></li>
+      <li><a href="product.html">Product</a></li>
+      <li><a href="pasar.html">Pasar</a></li>
+      <li><a href="pembayaran.html">Pembayaran</a></li>
+      <li><button onclick="logout()">Logout</button></li>
+    </ul>
+  </div>
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <h2>Profil Saya</h2>
+  </div>
+
+  <!-- Konten Utama -->
+  <div class="dashboard-container">
+    <div class="main-content">
+      <!-- Kartu Profil -->
+      <div class="profile-card">
+        <h3 id="username">User</h3>
+        <div class="profile-info">
+          Level: <strong>LV1</strong> &nbsp;|&nbsp; Kode: <strong>HGQF6B</strong>
+        </div>
+        <div class="profile-balance">Saldo: Rp <span id="balance">341.667</span></div>
+        <div class="profile-info" style="margin-top: 8px;">Keberuntungan: <strong>450</strong></div>
+      </div>
+
+      <!-- Penghasilan -->
+      <div class="profile-card">
+        <h3>Penghasilan Akun</h3>
+        <p>Hari ini: <strong>Rp 25.800</strong></p>
+        <p>Total: <strong>Rp 366.667</strong></p>
+      </div>
+
+      <!-- Tombol Aksi -->
+      <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <a href="isi.html" style="flex: 1;">
+          <button>Isi Ulang</button>
+        </a>
+        <a href="tarik.html" style="flex: 1;">
+          <button>Tarik Uang</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigasi Bawah -->
+  <div class="bottom-nav">
+    <a href="index.html"><div>🏠<br>Rumah</div></a>
+    <a href="aktiva.html"><div>🚗<br>Aktiva</div></a>
+    <a href="berita.html"><div>📰<br>Berita</div></a>
+    <a href="profil.html"><div>👤<br>Saya</div></a>
+  </div>
+
+  <script>
+    const username = localStorage.getItem("loggedInUser") || "User";
+    document.getElementById("username").innerText = username;
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+      sidebar.classList.toggle("show");
+      overlay.classList.toggle("show");
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

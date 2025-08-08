@@ -3,60 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Profil Saya</title>
+  <title>Profil</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    .topbar {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .profile-container {
+      padding: 20px;
+    }
+
+    .profile-card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .profile-card h2 {
+      margin-bottom: 10px;
+    }
+
+    .profile-item {
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #fff;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #ccc;
+      padding: 10px 0;
+    }
+
+    .bottom-nav a {
+      text-align: center;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .bottom-nav a div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Overlay -->
-  <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
-
-  <!-- Sidebar -->
-  <div id="sidebar" class="sidebar">
-    <ul>
-      <li><a href="profil.html">Profil</a></li>
-      <li><a href="product.html">Product</a></li>
-      <li><a href="pasar.html">Pasar</a></li>
-      <li><a href="pembayaran.html">Pembayaran</a></li>
-      <li><button onclick="logout()">Logout</button></li>
-    </ul>
-  </div>
-
   <!-- Top Bar -->
   <div class="topbar">
-    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-    <h2>Profil Saya</h2>
+    <h2>Profil</h2>
   </div>
 
-  <!-- Konten Utama -->
-  <div class="dashboard-container">
-    <div class="main-content">
-      <!-- Kartu Profil -->
-      <div class="profile-card">
-        <h3 id="username">User</h3>
-        <div class="profile-info">
-          Level: <strong>LV1</strong> &nbsp;|&nbsp; Kode: <strong>HGQF6B</strong>
-        </div>
-        <div class="profile-balance">Saldo: Rp <span id="balance">341.667</span></div>
-        <div class="profile-info" style="margin-top: 8px;">Keberuntungan: <strong>450</strong></div>
-      </div>
-
-      <!-- Penghasilan -->
-      <div class="profile-card">
-        <h3>Penghasilan Akun</h3>
-        <p>Hari ini: <strong>Rp 0.000</strong></p>
-        <p>Total: <strong>Rp 0.000</strong></p>
-      </div>
-
-      <!-- Tombol Aksi -->
-      <div style="display: flex; gap: 10px; margin-top: 20px;">
-        <a href="isi.html" style="flex: 1;">
-          <button>Isi Ulang</button>
-        </a>
-        <a href="tarik.html" style="flex: 1;">
-          <button>Tarik Uang</button>
-        </a>
-      </div>
+  <!-- Konten Profil -->
+  <div class="profile-container">
+    <div class="profile-card">
+      <h2 id="username">Nama Pengguna</h2>
+      <div class="profile-item">Kode Akun: <strong id="user-code">-</strong></div>
+      <div class="profile-item">Saldo: <strong>Rp 0</strong></div>
+      <div class="profile-item">Pendapatan: <strong>Rp 0</strong></div>
     </div>
   </div>
 
@@ -69,20 +91,27 @@
   </div>
 
   <script>
-    const username = localStorage.getItem("loggedInUser") || "User";
+    // Ambil username dari localStorage
+    const username = localStorage.getItem("loggedInUser") || "Pengguna";
     document.getElementById("username").innerText = username;
 
-    function toggleSidebar() {
-      const sidebar = document.getElementById("sidebar");
-      const overlay = document.getElementById("overlay");
-      sidebar.classList.toggle("show");
-      overlay.classList.toggle("show");
+    // Generate kode unik (6 karakter)
+    function generateUserCode() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return code;
     }
 
-    function logout() {
-      localStorage.removeItem("loggedInUser");
-      window.location.href = "login.html";
+    // Simpan dan tampilkan kode unik untuk pengguna
+    let savedCode = localStorage.getItem("userCode");
+    if (!savedCode) {
+      savedCode = generateUserCode();
+      localStorage.setItem("userCode", savedCode);
     }
+    document.getElementById("user-code").innerText = savedCode;
   </script>
 </body>
 </html>

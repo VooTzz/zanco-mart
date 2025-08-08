@@ -1,11 +1,11 @@
 // ========== Simpan dan Ambil Data User ==========
-function saveUser(username, email, password) {
+function saveUser(username, email, password, kode = "") {
   const users = JSON.parse(localStorage.getItem("users")) || [];
 
   const userExists = users.find(user => user.username === username || user.email === email);
   if (userExists) return false;
 
-  users.push({ username, email, password });
+  users.push({ username, email, password, kode, saldo: 0 });
   localStorage.setItem("users", JSON.stringify(users));
   return true;
 }
@@ -18,7 +18,16 @@ function checkLogin(usernameOrEmail, password) {
   );
 }
 
-// ========== Handle Register ==========
+function beriBonusReferral(kodeReferral) {
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  const referer = users.find(user => user.kode === kodeReferral);
+  if (referer) {
+    referer.saldo = (referer.saldo || 0) + 50000;
+    localStorage.setItem("users", JSON.stringify(users));
+  }
+}
+
+// ========== Handle DOM ==========
 document.addEventListener("DOMContentLoaded", function () {
   const registerForm = document.getElementById("register-form");
   if (registerForm) {
@@ -28,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const username = document.getElementById("register-username").value.trim();
       const email = document.getElementById("register-email").value.trim();
       const password = document.getElementById("register-password").value;
+      const kode = Math.random().toString(36).substring(2, 8); // kode unik otomatis
       const message = document.getElementById("register-message");
 
       if (!username || !email || !password) {
@@ -36,9 +46,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      if (saveUser(username, email, password)) {
+      if (saveUser(username, email, password, kode)) {
         message.style.color = "green";
-        message.innerText = "Pendaftaran berhasil! Silakan login.";
+        message.innerText = `Pendaftaran berhasil! Kode referral Anda: ${kode}`;
         registerForm.reset();
       } else {
         message.style.color = "red";
@@ -55,10 +65,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const usernameOrEmail = document.getElementById("login-username").value.trim();
       const password = document.getElementById("login-password").value;
+      const kodeReferral = document.getElementById("referral-code").value.trim();
       const message = document.getElementById("login-message");
 
       const user = checkLogin(usernameOrEmail, password);
       if (user) {
+        // Proses referral
+        if (kodeReferral && kodeReferral !== user.kode) {
+          beriBonusReferral(kodeReferral);
+        }
+
         message.style.color = "green";
         message.innerText = "Login berhasil!";
         localStorage.setItem("loggedInUser", JSON.stringify(user));

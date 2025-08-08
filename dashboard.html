@@ -5,43 +5,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    .dashboard-container {
+      padding: 20px;
+    }
+
+    .topbar {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .profile-card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .profile-info {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .profile-balance {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #fff;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #ccc;
+      padding: 10px 0;
+    }
+
+    .bottom-nav a {
+      text-align: center;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .bottom-nav a div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Overlay untuk sidebar -->
-  <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
-
-  <!-- Sidebar -->
-  <div id="sidebar" class="sidebar">
-    <ul>
-      <li><a href="profil.html">Profil</a></li>
-      <li><a href="product.html">Product</a></li>
-      <li><a href="pasar.html">Pasar</a></li>
-      <li><a href="pembayaran.html">Pembayaran</a></li>
-      <li><button onclick="logout()">Logout</button></li>
-    </ul>
-  </div>
-
   <!-- Top Bar -->
   <div class="topbar">
-    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
     <h2>Dashboard</h2>
   </div>
 
   <!-- Konten Utama -->
   <div class="dashboard-container">
-    <div class="main-content">
-      <!-- Kartu Profil -->
-      <div class="profile-card">
-        <h3 id="username">User</h3>
-        <div class="profile-info">
-          Level: <strong>LV1</strong> &nbsp;|&nbsp; Kode: <strong>HGQF6B</strong>
-        </div>
-        <div class="profile-balance">Saldo: Rp <span id="balance">0</span></div>
+    <div class="profile-card">
+      <h3 id="username">User</h3>
+      <div class="profile-info">
+        Level: <strong>LV1</strong> &nbsp;|&nbsp; Kode: <strong>HGQF6B</strong>
       </div>
-
-      <p>Selamat datang di dashboard. Silakan pilih menu di bawah atau dari sidebar.</p>
+      <div class="profile-balance">Saldo: Rp <span id="balance">0</span></div>
     </div>
+
+    <p>Selamat datang di dashboard. Silakan gunakan menu navigasi di bawah.</p>
   </div>
 
   <!-- Navigasi Bawah -->
@@ -53,25 +96,11 @@
   </div>
 
   <script>
-    // Ambil nama pengguna dari localStorage
     const username = localStorage.getItem("loggedInUser") || "User";
     document.getElementById("username").innerText = username;
 
-    // Simulasi saldo
     const saldoSimulasi = 341667;
     document.getElementById("balance").innerText = saldoSimulasi.toLocaleString("id-ID");
-
-    function toggleSidebar() {
-      const sidebar = document.getElementById("sidebar");
-      const overlay = document.getElementById("overlay");
-      sidebar.classList.toggle("show");
-      overlay.classList.toggle("show");
-    }
-
-    function logout() {
-      localStorage.removeItem("loggedInUser");
-      window.location.href = "login.html";
-    }
   </script>
 </body>
 </html>

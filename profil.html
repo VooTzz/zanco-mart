@@ -20,7 +20,6 @@
       text-align: center;
       border-bottom-left-radius: 20px;
       border-bottom-right-radius: 20px;
-      position: relative;
     }
 
     .header img {
@@ -38,6 +37,31 @@
 
     .info p {
       margin: 5px 0;
+    }
+
+    .balance-actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 10px 20px;
+    }
+
+    .balance-actions button {
+      flex: 1;
+      text-align: center;
+      background: #ffffff;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      color: #007bff;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .balance-actions button:hover {
+      background: #e6f0ff;
     }
 
     .menu {
@@ -95,8 +119,13 @@
   </div>
 
   <div class="info">
-    <p>Saldo: <strong>Rp 0</strong></p>
-    <p>Pendapatan: <strong>Rp 0</strong></p>
+    <p>Saldo: <strong id="saldo">Rp 0</strong></p>
+    <p>Pendapatan: <strong id="pendapatan">Rp 0</strong></p>
+  </div>
+
+  <div class="balance-actions">
+    <button onclick="isiSaldo()">Isi Saldo</button>
+    <button onclick="tarikSaldo()">Tarik Saldo</button>
   </div>
 
   <div class="menu">
@@ -112,7 +141,6 @@
     <a href="tentang.html">Tentang Kami</a>
   </div>
 
-  <!-- Navigasi Bawah -->
   <div class="bottom-nav">
     <a href="dashboard.html"><div>🏠<br>Beranda</div></a>
     <a href="chat.html"><div>💬<br>Chat</div></a>
@@ -121,11 +149,19 @@
   </div>
 
   <script>
-    // Ambil username dari localStorage
     const username = localStorage.getItem("loggedInUser") || "User";
     document.getElementById("username").innerText = username;
 
-    // Buat kode referral acak
+    const kodeRef = localStorage.getItem("kodeRef") || generateKode();
+    localStorage.setItem("kodeRef", kodeRef);
+    document.getElementById("kode").innerText = "Kode: " + kodeRef;
+
+    const saldo = parseInt(localStorage.getItem("saldo") || "0");
+    const pendapatan = parseInt(localStorage.getItem("pendapatan") || "120000");
+
+    document.getElementById("saldo").innerText = formatRupiah(saldo);
+    document.getElementById("pendapatan").innerText = formatRupiah(pendapatan);
+
     function generateKode(length = 6) {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
       let result = '';
@@ -135,7 +171,35 @@
       return result;
     }
 
-    document.getElementById("kode").innerText = "Kode: " + generateKode();
+    function formatRupiah(angka) {
+      return "Rp " + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function isiSaldo() {
+      const tambah = parseInt(prompt("Masukkan jumlah saldo yang ingin diisi:", "10000"));
+      if (!isNaN(tambah) && tambah > 0) {
+        const saldoLama = parseInt(localStorage.getItem("saldo") || "0");
+        const saldoBaru = saldoLama + tambah;
+        localStorage.setItem("saldo", saldoBaru);
+        document.getElementById("saldo").innerText = formatRupiah(saldoBaru);
+        alert("Saldo berhasil diisi!");
+      } else {
+        alert("Masukkan tidak valid.");
+      }
+    }
+
+    function tarikSaldo() {
+      const tarik = parseInt(prompt("Masukkan jumlah saldo yang ingin ditarik:", "5000"));
+      const saldoLama = parseInt(localStorage.getItem("saldo") || "0");
+      if (!isNaN(tarik) && tarik > 0 && tarik <= saldoLama) {
+        const saldoBaru = saldoLama - tarik;
+        localStorage.setItem("saldo", saldoBaru);
+        document.getElementById("saldo").innerText = formatRupiah(saldoBaru);
+        alert("Saldo berhasil ditarik!");
+      } else {
+        alert("Jumlah tidak valid atau saldo tidak mencukupi.");
+      }
+    }
   </script>
 
 </body>
